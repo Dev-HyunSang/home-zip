@@ -17,8 +17,8 @@ jobs:
     env:
       IMAGE: home-zip
       CONTAINER: home-zip
-      # 서버에서 열 포트. 저장소 Settings → Variables 의 HOST_PORT 로 바꿀 수 있다 (없으면 3100).
-      HOST_PORT: ${{ vars.HOST_PORT || '3100' }}
+      # 서버에서 열 포트. 저장소 Settings → Variables 의 HOST_PORT 로 바꿀 수 있다 (없으면 8878).
+      HOST_PORT: ${{ vars.HOST_PORT || '8878' }}
     steps:
       - uses: actions/checkout@v4
 
