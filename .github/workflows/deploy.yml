@@ -1,0 +1,54 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Actions 탭에서 수동 실행
+
+# 배포가 겹치지 않게 하나씩만 돌린다
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # 배포할 서버에 설치한 self-hosted runner에서 실행된다 (서버에 Docker 필요)
+    runs-on: self-hosted
+    env:
+      IMAGE: home-zip
+      CONTAINER: home-zip
+      HOST_PORT: 3000 # 서버에서 열 포트. 겹치면 바꾸세요.
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: |
+          docker build \
+            --build-arg NEXT_PUBLIC_NAVER_MAP_CLIENT_ID="${{ secrets.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID }}" \
+            -t "$IMAGE:latest" .
+
+      - name: Restart container
+        env:
+          APPLY_HOME_API_KEY: ${{ secrets.APPLY_HOME_API_KEY }}
+          NAVER_MAP_CLIENT_SECRET: ${{ secrets.NAVER_MAP_CLIENT_SECRET }}
+          NEXT_PUBLIC_NAVER_MAP_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID }}
+        run: |
+          docker rm -f "$CONTAINER" 2>/dev/null || true
+          # -e NAME (값 없이) 는 위 env의 값을 넘겨서 키가 명령줄/로그에 드러나지 않는다
+          docker run -d --name "$CONTAINER" --restart unless-stopped \
+            -p "$HOST_PORT:3000" \
+            -e APPLY_HOME_API_KEY -e NAVER_MAP_CLIENT_SECRET -e NEXT_PUBLIC_NAVER_MAP_CLIENT_ID \
+            "$IMAGE:latest"
+
+      - name: Health check
+        run: |
+          for i in $(seq 1 30); do
+            curl -fsS -o /dev/null "http://localhost:$HOST_PORT/guide" && echo "OK" && exit 0
+            sleep 2
+          done
+          docker logs --tail 50 "$CONTAINER"
+          exit 1
+
+      - name: Clean old images
+        if: always()
+        run: docker image prune -f

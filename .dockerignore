@@ -1,0 +1,10 @@
+node_modules
+.next
+.git
+.github
+.serena
+.env*
+!.env.example
+*.tsbuildinfo
+Dockerfile
+.dockerignore
