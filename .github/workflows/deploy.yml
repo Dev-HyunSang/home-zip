@@ -17,7 +17,8 @@ jobs:
     env:
       IMAGE: home-zip
       CONTAINER: home-zip
-      HOST_PORT: 3000 # 서버에서 열 포트. 겹치면 바꾸세요.
+      # 서버에서 열 포트. 저장소 Settings → Variables 의 HOST_PORT 로 바꿀 수 있다 (없으면 3100).
+      HOST_PORT: ${{ vars.HOST_PORT || '3100' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -34,6 +35,12 @@ jobs:
           NEXT_PUBLIC_NAVER_MAP_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID }}
         run: |
           docker rm -f "$CONTAINER" 2>/dev/null || true
+          # 다른 컨테이너가 포트를 쓰고 있으면 누가 쓰는지 알려주고 멈춘다
+          used=$(docker ps --filter "publish=$HOST_PORT" --format '{{.Names}} ({{.Image}})')
+          if [ -n "$used" ]; then
+            echo "::error::포트 $HOST_PORT 를 다른 컨테이너가 쓰고 있어요: $used. 저장소 변수 HOST_PORT 를 다른 포트로 바꾸세요."
+            exit 1
+          fi
           # -e NAME (값 없이) 는 위 env의 값을 넘겨서 키가 명령줄/로그에 드러나지 않는다
           docker run -d --name "$CONTAINER" --restart unless-stopped \
             -p "$HOST_PORT:3000" \
