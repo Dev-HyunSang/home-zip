@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test src/**/*.test.ts",
+    "geocode": "node --env-file=.env --no-warnings scripts/geocode.ts"
   },
   "dependencies": {
     "next": "16.4.5",
