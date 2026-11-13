@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const TABS = [
   { href: "/", label: "청약 공고" },
   { href: "/guide", label: "청약 가이드" },
+  { href: "/policy", label: "정부 정책" },
 ];
 
 // 상단 탭. 현재 경로만 알면 돼서 usePathname 하나로 처리한다.
