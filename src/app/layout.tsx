@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "home-zip · 청약 공고 한눈에",
+  // 하위 페이지는 title만 주면 "청약 가이드 · 홈.zip" 처럼 붙는다
+  title: { default: "홈.zip", template: "%s · 홈.zip" },
   description: "주택 청약 공고를 한눈에 모아 보기",
 };
 

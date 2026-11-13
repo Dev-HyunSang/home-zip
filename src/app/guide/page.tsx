@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { GUIDE } from "../../../data/guide.ts";
 
 export const metadata: Metadata = {
-  title: "home-zip · 청약 가이드",
+  title: "청약 가이드",
   description: "주택 청약 당첨 기준과 자격 조건 안내",
 };
 
