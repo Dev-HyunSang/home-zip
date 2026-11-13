@@ -36,9 +36,9 @@ export default function Home({ searchParams }: PageProps<"/">) {
       {/* 가이드 페이지와 같은 경고 박스 */}
       <div className="mt-4 flex gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
         <span aria-hidden>⚠️</span>
-        <p>요약 정보라 실제와 다를 수 있어요. 신청 전 반드시 공고문과 청약홈에서 확인하세요.</p>
+        <p>요약 정보라 실제와 다를 수 있어요. 신청 전 반드시 공고문과 청약홈, 출처 등에서 확인하세요.</p>
       </div>
-      <Suspense fallback={<p className="mt-8">불러오는 중... 잠시만 기다려주세요!</p>}>
+      <Suspense fallback={<p className="mt-8">불러오는 중 입니다. 잠시만 기다려주세요!</p>}>
         <NoticeList searchParams={searchParams} />
       </Suspense>
     </main>
