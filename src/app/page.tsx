@@ -32,13 +32,13 @@ export default function Home({ searchParams }: PageProps<"/">) {
       <p className="mt-1 text-sm text-zinc-500">
         분양·무순위·오피스텔·임대 공고 (기간을 고르지 않으면 최근 60일 공고)
       </p>
-      <p className="mt-1 text-sm text-zinc-500">
-        출처: 청약홈. 신청 전 반드시 공고문을 확인하세요.
-      </p>
-      <p className="mt-1 text-sm text-red-400">
-        본 청약 내용은 정확하지 않을 수도 있어요. 신청 전 반드시 공고문과 청약홈 등의 정식 청약 공고 홈페이지의 정보를 확인하세요.
-      </p>
-      <Suspense fallback={<p className="mt-8">불러오는 중…</p>}>
+      <p className="mt-1 text-sm text-zinc-500">출처: 청약홈</p>
+      {/* 가이드 페이지와 같은 경고 박스 */}
+      <div className="mt-4 flex gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
+        <span aria-hidden>⚠️</span>
+        <p>요약 정보라 실제와 다를 수 있어요. 신청 전 반드시 공고문과 청약홈에서 확인하세요.</p>
+      </div>
+      <Suspense fallback={<p className="mt-8">불러오는 중... 잠시만 기다려주세요!</p>}>
         <NoticeList searchParams={searchParams} />
       </Suspense>
     </main>
