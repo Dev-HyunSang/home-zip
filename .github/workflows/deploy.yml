@@ -25,14 +25,14 @@ jobs:
       - name: Build image
         run: |
           docker build \
-            --build-arg NEXT_PUBLIC_NAVER_MAP_CLIENT_ID="${{ secrets.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID }}" \
+            --build-arg NAVER_MAP_CLIENT_ID="${{ secrets.NAVER_MAP_CLIENT_ID }}" \
             -t "$IMAGE:latest" .
 
       - name: Restart container
         env:
           APPLY_HOME_API_KEY: ${{ secrets.APPLY_HOME_API_KEY }}
           NAVER_MAP_CLIENT_SECRET: ${{ secrets.NAVER_MAP_CLIENT_SECRET }}
-          NEXT_PUBLIC_NAVER_MAP_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID }}
+          NAVER_MAP_CLIENT_ID: ${{ secrets.NAVER_MAP_CLIENT_ID }}
         run: |
           docker rm -f "$CONTAINER" 2>/dev/null || true
           # 다른 컨테이너가 포트를 쓰고 있으면 누가 쓰는지 알려주고 멈춘다
@@ -44,7 +44,7 @@ jobs:
           # -e NAME (값 없이) 는 위 env의 값을 넘겨서 키가 명령줄/로그에 드러나지 않는다
           docker run -d --name "$CONTAINER" --restart unless-stopped \
             -p "$HOST_PORT:3000" \
-            -e APPLY_HOME_API_KEY -e NAVER_MAP_CLIENT_SECRET -e NEXT_PUBLIC_NAVER_MAP_CLIENT_ID \
+            -e APPLY_HOME_API_KEY -e NAVER_MAP_CLIENT_SECRET -e NAVER_MAP_CLIENT_ID \
             "$IMAGE:latest"
 
       - name: Health check

@@ -4,9 +4,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-# NEXT_PUBLIC_* 값은 빌드할 때 브라우저 코드에 박히므로 빌드 인자로 받는다.
-ARG NEXT_PUBLIC_NAVER_MAP_CLIENT_ID
-ENV NEXT_PUBLIC_NAVER_MAP_CLIENT_ID=$NEXT_PUBLIC_NAVER_MAP_CLIENT_ID
+# NAVER_MAP_CLIENT_ID는 next.config env로 빌드할 때 브라우저 코드에 박히므로 빌드 인자로 받는다.
+ARG NAVER_MAP_CLIENT_ID
+ENV NAVER_MAP_CLIENT_ID=$NAVER_MAP_CLIENT_ID
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm test && npm run build
 

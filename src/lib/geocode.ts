@@ -7,9 +7,9 @@ export type Geo = { lat: number; lng: number; exact: boolean };
 export type GeoFile = Record<string, Geo | null>;
 
 export async function geocodeLive(address: string): Promise<Geo | null> {
-  const id = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
+  const id = process.env.NAVER_MAP_CLIENT_ID;
   const secret = process.env.NAVER_MAP_CLIENT_SECRET;
-  if (!id || !secret) throw new Error("NEXT_PUBLIC_NAVER_MAP_CLIENT_ID / NAVER_MAP_CLIENT_SECRET 가 없습니다");
+  if (!id || !secret) throw new Error("NAVER_MAP_CLIENT_ID / NAVER_MAP_CLIENT_SECRET 가 없습니다");
 
   for (const c of addressCandidates(address)) {
     const res = await fetch(ENDPOINT + encodeURIComponent(c.q), {
