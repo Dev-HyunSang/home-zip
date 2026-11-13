@@ -33,3 +33,9 @@ body {
 .select-chevron {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2371717a'%3E%3Cpath d='M5.3 7.3a1 1 0 0 1 1.4 0L10 10.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4z'/%3E%3C/svg%3E");
 }
+
+/* 네이버 지도엔 다크 지도 타입이 없어서 타일 이미지만 반전시킨다. 마커·정보창은 div라 영향 없음.
+   ponytail: 색이 원본 다크 지도만큼 정확하진 않다. 정식 다크 스타일이 필요하면 NCP 스타일 에디터 */
+[data-theme="dark"] .naver-map img {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9);
+}

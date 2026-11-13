@@ -138,7 +138,7 @@ export function NoticeMap({ points }: { points: MapPoint[] }) {
           서비스 URL에 등록돼 있는지 확인하세요.
         </p>
       ) : (
-        <div ref={el} className="mt-6 h-[60vh] min-h-80 w-full rounded border" aria-label="공고 위치 지도" />
+        <div ref={el} className="naver-map mt-6 h-[60vh] min-h-80 w-full rounded border" aria-label="공고 위치 지도" />
       )}
       <p className="mt-3 flex flex-wrap gap-4 text-xs text-zinc-600 dark:text-zinc-400">
         {RANK.map((s) => (
