@@ -18,6 +18,18 @@ export const metadata: Metadata = {
   // 하위 페이지는 title만 주면 "청약 가이드 · 홈.zip" 처럼 붙는다
   title: { default: "홈.zip", template: "%s · 홈.zip" },
   description: "주택 청약 공고를 한눈에 모아 보기",
+  openGraph: {
+    title: "홈.zip",
+    description: "주택 청약 공고를 한눈에 모아 보기",
+    siteName: "홈.zip",
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "홈.zip",
+    description: "주택 청약 공고를 한눈에 모아 보기",
+  },
 };
 
 // 첫 페인트 전에 테마를 정해서 새로고침 때 깜빡이지 않게 한다.
